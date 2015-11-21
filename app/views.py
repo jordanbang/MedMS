@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
 from sms_service import SmsService
 
 sms_sender = SmsService()
@@ -11,6 +12,7 @@ def index(request):
 
 
 @require_http_methods(['GET', 'POST'])
+@csrf_exempt
 def receive_sms(request):
     """Respond to a new sms"""
 
