@@ -9,8 +9,8 @@ sms_sender = SmsService()
 def index(request):
     return HttpResponse("What up?")
 
-
-@require_http_methods(['POST'])
+@require_http_methods(['GET', 'POST'])
+@csrf_exempt
 def receive_sms(request):
     """Respond to a new sms"""
 
