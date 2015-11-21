@@ -38,7 +38,7 @@ def receive_sms(request):
               "Patient's message: {}".format(from_number, body)
         failed_messages = sms_sender.send_new_message(sos, get_available_doctors())
 
-        return HttpResponse('ok good')
+        return HttpResponse(str(resp))
 
     else:
         return HttpResponse('Ok well whatever.')
