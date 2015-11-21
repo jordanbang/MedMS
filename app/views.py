@@ -10,9 +10,12 @@ def index(request):
     return HttpResponse("What up?")
 
 
-@require_http_methods(['POST'])
+@require_http_methods(['GET', 'POST'])
 def receive_sms(request):
     """Respond to a new sms"""
+
+    if request.method == 'GET':
+        return 'ZOMG'
 
     from_number = request.POST.get('From')
     body = request.POST.get('Body')
