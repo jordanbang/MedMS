@@ -4,11 +4,16 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from sms_service import SmsService
 
+from django.contrib.auth.models import User
+from .models import Doctor
+
 sms_sender = SmsService()
 # Create your views here.
 
 def index(request):
-    return HttpResponse("What up?")
+    context = {}
+
+    return render(request, "app/index.html", context)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -39,3 +44,20 @@ def receive_sms(request):
 
 def get_available_doctors():
     return ['4169488810']
+
+
+@require_http_methods(["POST"])
+def signup(request):
+    data = request.POST.get("data")
+
+    user = User(first_name=data["first_name"], last_name=data["last_name"], email=data["email"],
+                username=data["first_name"]+data["last_name"])
+    user.save()
+    doctor = Doctor(user=user, phone=data["phone"], location=data["location"])
+    doctor.save()
+
+    return HttpResponse(
+            # json.dumps(response_data),
+            content_type="application/json"
+    )
+

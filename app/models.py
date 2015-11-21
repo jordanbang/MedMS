@@ -16,6 +16,7 @@ DAYS_OF_WEEK = [
 class Doctor(models.Model):
     user = models.OneToOneField(User, related_name='user', unique=True)
     phone = models.CharField(max_length=30, blank=True)
+    location = models.CharField(max_length=30, blank=True)
     last_modified = models.DateTimeField(auto_now=True)
 
 
