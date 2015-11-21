@@ -22,6 +22,6 @@ class Doctor(models.Model):
 
 class Availability(models.Model):
     doctor = models.ForeignKey(Doctor)
-    day = models.CharField(choices=DAYS_OF_WEEK, db_index=True, max_length=3)
+    day = models.IntegerField(choices=DAYS_OF_WEEK, db_index=True)
     start = models.TimeField(db_index=True)
     end = models.TimeField(db_index=True)
