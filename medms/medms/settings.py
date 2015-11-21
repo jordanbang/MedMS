@@ -75,16 +75,16 @@ WSGI_APPLICATION = 'medms.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME':    'mysql',  #'heroku_17d2be463a47115',
-#         'USERNAME': 'jordanbangia',                             #'b90674e75b96be',
-#         'PASSWORD': 'password',                                 #'0c30a494',
-#         'HOST': 'localhost',                            #'us-cdbr-iron-east-03.cleardb.net',
-#         'PORT': '3306',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME':    'mysql',  #'heroku_17d2be463a47115',
+        'USERNAME': 'jordanbangia',                             #'b90674e75b96be',
+        'PASSWORD': 'password',                                 #'0c30a494',
+        'HOST': 'localhost',                            #'us-cdbr-iron-east-03.cleardb.net',
+        'PORT': '3306',
+    }
+}
 
 
 # Internationalization
