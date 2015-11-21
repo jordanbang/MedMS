@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
@@ -44,8 +45,11 @@ def receive_sms(request):
 
 
 def get_available_doctors():
-
-    pass
+    now = datetime.datetime.now()
+    today = now.isoweekday()
+    available_doctors = Availability.object.filter(day=today, start__lte__=now, end__gte__=now)
+    doctors = [x.doctor.phone for x in available_doctors]
+    return doctors
 
 
 @require_http_methods(["POST"])
