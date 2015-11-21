@@ -14,19 +14,22 @@ def index(request):
 def receive_sms(request):
     """Respond to a new sms"""
 
-    if request.method == 'GET':
-        return 'ZOMG'
+    if request.GET:
+        return HttpResponse('ZOMG')
 
-    from_number = request.POST.get('From')
-    body = request.POST.get('Body')
+    elif request.POST:
+        from_number = request.POST.get('From')
+        body = request.POST.get('Body')
 
-    resp = sms_sender.reply_to_message()
-    sos = "Dear MedMS volunteers. A patient with the following number: {} is requesting assistance. " \
-          "Patient's message: {}".format(from_number, body)
-    failed_messages = sms_sender.send_new_message(sos, get_available_doctors())
+        resp = sms_sender.reply_to_message()
+        sos = "Dear MedMS volunteers. A patient with the following number: {} is requesting assistance. " \
+              "Patient's message: {}".format(from_number, body)
+        failed_messages = sms_sender.send_new_message(sos, get_available_doctors())
 
-    return str(resp)
+        return HttpResponse(str(resp))
 
+    else:
+        return HttpResponse('Ok well whatever.')
 
 def get_available_doctors():
     return ['4169488810']
