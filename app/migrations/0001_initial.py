@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='Availability',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('day', models.CharField(db_index=True, max_length=3, choices=[(b'MON', b'Monday'), (b'TUE', b'Tuesday'), (b'WED', b'Wednesday'), (b'THU', b'Thursday'), (b'FRI', b'Friday'), (b'SAT', b'Saturday'), (b'SUN', b'Sunday')])),
+                ('day', models.CharField(db_index=True, max_length=3, choices=[(1, b'Monday'), (2, b'Tuesday'), (3, b'Wednesday'), (4, b'Thursday'), (5, b'Friday'), (6, b'Saturday'), (7, b'Sunday')])),
                 ('start', models.TimeField(db_index=True)),
                 ('end', models.TimeField(db_index=True)),
             ],
@@ -26,6 +26,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('phone', models.CharField(max_length=30, blank=True)),
+                ('location', models.CharField(max_length=30, blank=True)),
                 ('last_modified', models.DateTimeField(auto_now=True)),
                 ('user', models.OneToOneField(related_name='user', to=settings.AUTH_USER_MODEL)),
             ],
