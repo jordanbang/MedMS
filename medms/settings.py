@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'medms.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':    'mysql',  #'heroku_17d2be463a47115',
-        'USERNAME': 'jordanbangia',                             #'b90674e75b96be',
-        'PASSWORD': 'password',                                 #'0c30a494',
-        'HOST': 'localhost',                            #'us-cdbr-iron-east-03.cleardb.net',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME':    'db490mdtgfj7b4',
+        'USERNAME': 'whqdxmonefmmdf',
+        'PASSWORD': 'OH8PZI3Qb5mb0gRz1rWrhsUI4L',
+        'HOST': 'ec2-54-83-202-64.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
@@ -108,7 +108,7 @@ STATIC_URL = '/static/'
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] = dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

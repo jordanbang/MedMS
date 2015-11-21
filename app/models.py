@@ -3,13 +3,13 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 DAYS_OF_WEEK = [
-    ('MON', 'Monday'),
-    ('TUE', 'Tuesday'),
-    ('WED', 'Wednesday'),
-    ('THU', 'Thursday'),
-    ('FRI', 'Friday'),
-    ('SAT', 'Saturday'),
-    ('SUN', 'Sunday')
+    (1, 'Monday'),
+    (2, 'Tuesday'),
+    (3, 'Wednesday'),
+    (4, 'Thursday'),
+    (5, 'Friday'),
+    (6, 'Saturday'),
+    (7, 'Sunday')
 ]
 
 
