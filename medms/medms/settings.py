@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,8 +77,12 @@ WSGI_APPLICATION = 'medms.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME':    'mysql',  #'heroku_17d2be463a47115',
+        'USERNAME': 'jordanbangia',                             #'b90674e75b96be',
+        'PASSWORD': 'password',                                 #'0c30a494',
+        'HOST': 'localhost',                            #'us-cdbr-iron-east-03.cleardb.net',
+        'PORT': '3306',
     }
 }
 
