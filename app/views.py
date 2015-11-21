@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
+import twilio.twiml
 from sms_service import SmsService
 
 from django.contrib.auth.models import User
@@ -31,12 +32,13 @@ def receive_sms(request):
             from_number = request.POST.get('From')
             body = request.POST.get('Body')
 
-        resp = sms_sender.reply_to_message()
+        resp = twilio.twiml.Response()
+        resp.message('Thank you for reaching out to MedMS we will try to connect you to a doctor as soon as possible.')
         sos = "Dear MedMS volunteers. A patient with the following number: {} is requesting assistance. " \
               "Patient's message: {}".format(from_number, body)
         failed_messages = sms_sender.send_new_message(sos, get_available_doctors())
 
-        return HttpResponse('ok good')
+        return HttpResponse(str(resp))
 
     else:
         return HttpResponse('Ok well whatever.')
