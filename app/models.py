@@ -25,3 +25,10 @@ class Availability(models.Model):
     day = models.IntegerField(choices=DAYS_OF_WEEK, db_index=True)
     start = models.TimeField(db_index=True)
     end = models.TimeField(db_index=True)
+
+
+class PatientRequests(models.Model):
+    patient = models.CharField(max_length=30, blank=True)
+    location = models.CharField(max_length=30, blank=True)
+    open = models.BooleanField(db_index=True)
+

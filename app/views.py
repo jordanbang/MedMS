@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-from models import Doctor, Availability
+from models import Availability, PatientRequests
 from sms_service import SmsService
 
 from django.contrib.auth.models import User
@@ -33,21 +33,55 @@ def receive_sms(request):
             from_number = request.POST.get('From')
             body = request.POST.get('Body')
 
-        resp = sms_sender.reply_to_message()
-        sos = "Dear MedMS volunteers. A patient with the following number: {} is requesting assistance. " \
-              "Patient's message: {}".format(from_number, body)
-        failed_messages = sms_sender.send_new_message(sos, get_available_doctors())
+        doctor_ack = number_extractor(body)
+
+        if doctor_ack:
+            resp = sms_sender.reply_to_doctor()
+            open_requests = PatientRequests.objects.filter(patient=doctor_ack)
+            for req in open_requests:
+                req.open = False
+                req.save()
+
+            patient_reply = 'Dear MedMS patient, a doctor has acknowledged your request for assistance. ' \
+                            'You should expect to hear from them shortly.'
+            failed_messages = sms_sender.send_new_message(patient_reply, [doctor_ack])
+
+        else:
+            resp = sms_sender.reply_to_patient()
+            location = location_extractor(body)
+            PatientRequests(patient=from_number, location=location, open=True).save()
+            sos = "Dear MedMS volunteers. A patient with the following number: {} is requesting assistance. " \
+                  "Patient's message: {}".format(from_number, body)
+            failed_messages = sms_sender.send_new_message(sos, get_available_doctors())
 
         return HttpResponse(str(resp))
 
     else:
-        return HttpResponse('Ok well whatever.')
+        return HttpResponse(str(get_available_doctors()))
+
+
+def location_extractor(msg):
+    words = msg.lower().split(' ')
+    try:
+        loc = words.index('location')
+        location = words[loc + 1]
+    except:
+        location = 'Unspecified'
+    return location.upper()
+
+
+def number_extractor(msg):
+    words = msg.lower().split(' ')
+    if words[0][1:].isdigit():
+        return words[0]
+    else:
+        return None
 
 
 def get_available_doctors():
     now = datetime.datetime.now()
     today = now.isoweekday()
-    available_doctors = Availability.object.filter(day=today, start__lte__=now, end__gte__=now)
+    available_doctors = Availability.objects.filter(day=today, start__lte=now, end__gte=now)
     doctors = [x.doctor.phone for x in available_doctors]
     return doctors
 

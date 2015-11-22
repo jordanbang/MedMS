@@ -12,9 +12,15 @@ class SmsService(object):
         self.client = TwilioRestClient(self.ACCOUNT_SID, self.AUTH_TOKEN)
 
     @staticmethod
-    def reply_to_message():
+    def reply_to_patient():
         resp = twilio.twiml.Response()
         resp.message('Thank you for reaching out to MedMS we will try to connect you to a doctor as soon as possible.')
+        return resp
+
+    @staticmethod
+    def reply_to_doctor():
+        resp = twilio.twiml.Response()
+        resp.message('Thank you for helping a patient today.')
         return resp
 
     def send_new_message(self, body, recepients):
