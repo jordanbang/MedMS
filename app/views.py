@@ -33,14 +33,23 @@ def receive_sms(request):
             from_number = request.POST.get('From')
             body = request.POST.get('Body')
 
-        resp = sms_sender.reply_to_message()
-        location = location_extractor(body)
+        doctor_ack = number_extractor(body)
 
-        PatientRequests(patient=from_number, location=location, open=True).save()
+        if doctor_ack:
+            resp = sms_sender.reply_to_doctor()
+            req = PatientRequests.objects.filter(patient=doctor_ack)[0]
+            req.open = False
+            req.save()
+            failed_messages = sms_sender.send_new_message('Dear MedMS patient, a doctor has acknowledged your request for assistance.',
+                                        [doctor_ack])
 
-        sos = "Dear MedMS volunteers. A patient with the following number: {} is requesting assistance. " \
-              "Patient's message: {}".format(from_number, body)
-        failed_messages = sms_sender.send_new_message(sos, get_available_doctors())
+        else:
+            resp = sms_sender.reply_to_patient()
+            location = location_extractor(body)
+            PatientRequests(patient=from_number, location=location, open=True).save()
+            sos = "Dear MedMS volunteers. A patient with the following number: {} is requesting assistance. " \
+                  "Patient's message: {}".format(from_number, body)
+            failed_messages = sms_sender.send_new_message(sos, get_available_doctors())
 
         return HttpResponse(str(resp))
 
@@ -56,6 +65,14 @@ def location_extractor(msg):
     except:
         location = 'Unspecified'
     return location.upper()
+
+
+def number_extractor(msg):
+    words = msg.lower().split(' ')
+    if words[0][1:].isnumber():
+        return words[0]
+    else:
+        return None
 
 
 def get_available_doctors():
