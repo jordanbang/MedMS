@@ -32,8 +32,8 @@ def open_requests_respond(request):
         number = request.POST.patient
         failed_messages = respond_to_patient_request(number)
 
-    # return redirect("app/open_requests")
-    return HttpResponse(number)
+    return redirect("app/open_requests")
+    # return HttpResponse(number)
 
 
 @require_http_methods(['GET', 'POST'])
