@@ -41,13 +41,13 @@ def receive_sms(request):
         return HttpResponse(str(resp))
 
     else:
-        return HttpResponse('Ok well whatever.')
+        return HttpResponse(str(get_available_doctors()))
 
 
 def get_available_doctors():
     now = datetime.datetime.now()
     today = now.isoweekday()
-    available_doctors = Availability.object.filter(day=today, start__lte=now, end__gte=now)
+    available_doctors = Availability.objects.filter(day=today, start__lte=now, end__gte=now)
     doctors = [x.doctor.phone for x in available_doctors]
     return doctors
 
