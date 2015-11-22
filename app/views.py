@@ -145,7 +145,10 @@ def login_submit(request):
 
 @login_required(login_url='/app/login/')
 def account(request):
-    context = {}
+    context = {
+        'user': request.user,
+        'doctor': Doctor.objects.get(user=request.user)
+    }
     return render(request, 'app/loggedin.html', context)
 
 

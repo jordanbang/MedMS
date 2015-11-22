@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="{% static 'app/favicon.ico' %}">
 
-    <title>Doctor Logged In Page</title>
+    <title>Account</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
@@ -19,7 +19,7 @@
     <link href="{% static 'app/assets/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{% static 'app/navbar-static-top.css' %}" rel="stylesheet">
+    <link href="{% static 'app/dashboard.css' %}" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -28,9 +28,8 @@
   </head>
 
   <body>
-
     <!-- Static navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -39,13 +38,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">MedMS</a>
+          <img class="navbar-brand" src="{% static 'app/logo3.png' %}" style="margin-right:10px" />
+          <a class="navbar-brand" href="{% url 'index' %}">   MedMS    </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
+            <li><a href="{% url 'open_requests' %}">Open Requests</a></li>
           </ul>
-        </div><!--/.nav-collapse -->
+        </div><!--/.navbar-collapse -->
       </div>
     </nav>
 
@@ -54,8 +55,9 @@
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1><font size=6>Hello Doctor Blah, you're logged in!</font></h1>
-        <p>Here you can set your availability</p>
+        <h1><font size=6>Hello {{user.first_name}} {{user.last_name}}!</font></h1>
+        <p>Phone: {{doctor.phone}}</p>
+        <p>Location: {{doctor.location}}</p>
         <p>
           <a class="btn btn-lg btn-primary" role="button">Set/Modify your availability</a>
 
