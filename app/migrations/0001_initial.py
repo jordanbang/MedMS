@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='Availability',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('day', models.CharField(db_index=True, max_length=3, choices=[(1, b'Monday'), (2, b'Tuesday'), (3, b'Wednesday'), (4, b'Thursday'), (5, b'Friday'), (6, b'Saturday'), (7, b'Sunday')])),
+                ('day', models.IntegerField(db_index=True, choices=[(1, b'Monday'), (2, b'Tuesday'), (3, b'Wednesday'), (4, b'Thursday'), (5, b'Friday'), (6, b'Saturday'), (7, b'Sunday')])),
                 ('start', models.TimeField(db_index=True)),
                 ('end', models.TimeField(db_index=True)),
             ],
