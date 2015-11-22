@@ -10,12 +10,19 @@ from django.contrib.auth.models import User
 from .models import Doctor
 
 sms_sender = SmsService()
-# Create your views here.
 
+
+# Create your views here.
 def index(request):
     context = {}
 
     return render(request, "app/index.html", context)
+
+
+def open_requests(request):
+    context = dict(calls=PatientRequests.objects.filter(open=True))
+
+    return render(request, "app/calls.html", context)
 
 
 @require_http_methods(['GET', 'POST'])
