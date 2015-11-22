@@ -1,8 +1,10 @@
 import datetime
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseNotFound
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from models import Availability, PatientRequests
 from sms_service import SmsService
 
@@ -94,7 +96,6 @@ def signup(request):
 
 def signup_submit(request):
     if request.method == 'POST':
-        print(str(request.POST))
         data = request.POST
 
         user = User.objects.create_user(username=data["email"], email=data["email"],
@@ -104,8 +105,36 @@ def signup_submit(request):
         doctor = Doctor(user=user, phone=data["phone"], location=data["location"])
         doctor.save()
 
+        #TODO: redirect this to Doctor page
         print("it worked !")
         return HttpResponse("It worked!")
     else:
         print("it failed !")
         return HttpResponse("It failed")
+
+
+def medms_login(request):
+    context = {}
+    return render(request, 'app/login.html', context)
+
+
+def login_submit(request):
+    if request.method == 'POST':
+        data = request.POST
+
+        username = data["email"]
+        password = data["password"]
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                print("active user authenticated")
+                login(request, user)
+                return redirect('/app/account/')
+
+        return HttpResponseNotFound("Login failed, try again")
+
+@login_required(login_url='/app/login/')
+def account(request):
+    context = {}
+    return render(request, 'app/loggedin.html', context)
