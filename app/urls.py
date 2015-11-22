@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^login_submit/', views.login_submit, name='login_submit'),
     url(r'^account/', views.account, name='account'),
     url(r'^open_requests/', views.open_requests, name='open_requests'),
-    url(r'^open_requests_respond/', views.open_requests_respond, name='open_requests_respond'),
+    url(r'^open_requests_respond/', views.index, name='open_requests_respond'),
     url(r'^message/newsms/', views.receive_sms, name='smsResponder')
 ]
 
