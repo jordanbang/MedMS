@@ -37,7 +37,7 @@ def receive_sms(request):
 
         if doctor_ack:
             resp = sms_sender.reply_to_doctor()
-            open_requests = PatientRequests.objects.filter(patient=doctor_ack)
+            open_requests = PatientRequests.objects.filter(patient=doctor_ack, open=True)
             for req in open_requests:
                 req.open = False
                 req.save()
