@@ -29,7 +29,7 @@ def open_requests(request):
 
 def open_requests_respond(request):
     if request.method == 'POST':
-        number = request.POST.patient
+        number = request.POST.get("patient")
         failed_messages = respond_to_patient_request(number)
 
     # return redirect("app/open_requests")

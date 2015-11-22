@@ -2,7 +2,7 @@ from app import views
 from django.conf.urls import url
 
 urlpatterns = [
-    url(r'^/', views.index, name='index'),
+    url(r'^$', views.index, name='index'),
     url(r'^signup/', views.signup, name='signup'),
     url(r'^signup_submit/', views.signup_submit, name='signup_submit'),
     url(r'^login/', views.medms_login, name='login'),
