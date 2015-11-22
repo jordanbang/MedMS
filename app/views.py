@@ -69,7 +69,7 @@ def location_extractor(msg):
 
 def number_extractor(msg):
     words = msg.lower().split(' ')
-    if words[0][1:].isnumber():
+    if words[0][1:].isdigit():
         return words[0]
     else:
         return None
