@@ -112,9 +112,14 @@ def signup_submit(request):
         doctor = Doctor(user=user, phone=data["phone"], location=data["location"])
         doctor.save()
 
-        #TODO: redirect this to Doctor page
-        print("it worked !")
-        return HttpResponse("It worked!")
+        user = authenticate(username=data["email"], password=data["password"])
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+
+                #TODO: redirect this to Doctor page
+                return redirect('/app/account')
+        return HttpResponse("It failed")
     else:
         print("it failed !")
         return HttpResponse("It failed")
