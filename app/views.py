@@ -37,11 +37,14 @@ def receive_sms(request):
 
         if doctor_ack:
             resp = sms_sender.reply_to_doctor()
-            req = PatientRequests.objects.filter(patient=doctor_ack)[0]
-            req.open = False
-            req.save()
-            failed_messages = sms_sender.send_new_message('Dear MedMS patient, a doctor has acknowledged your request for assistance.',
-                                        [doctor_ack])
+            open_requests = PatientRequests.objects.filter(patient=doctor_ack)
+            for req in open_requests:
+                req.open = False
+                req.save()
+
+            patient_reply = 'Dear MedMS patient, a doctor has acknowledged your request for assistance. ' \
+                            'You should expect to hear from them shortly.'
+            failed_messages = sms_sender.send_new_message(patient_reply, [doctor_ack])
 
         else:
             resp = sms_sender.reply_to_patient()
@@ -97,4 +100,3 @@ def signup(request):
             # json.dumps(response_data),
             content_type="application/json"
     )
-
