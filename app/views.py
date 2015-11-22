@@ -1,5 +1,5 @@
 import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
@@ -30,8 +30,7 @@ def open_requests_respond(request):
         number = request.POST.patient
         failed_messages = respond_to_patient_request(number)
 
-    context = dict(calls=PatientRequests.objects.filter(open=True))
-    return render(request, "app/calls.html", context)
+    return redirect("app/open_requests")
 
 
 @require_http_methods(['GET', 'POST'])
