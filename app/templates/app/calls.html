@@ -75,7 +75,6 @@
                   <th>
                     <form action="{% url 'open_requests_respond' %}" method="post">
                       {% csrf_token %}
-                      <input type="hidden" name="patient2" value="{{call.patient}}">
                       <button type="submit" name="patient" value="{{call.patient}}">
                         Respond to Request
                       </button>
