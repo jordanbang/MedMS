@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -53,17 +54,31 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           
 
-          <h2 class="sub-header">Calls!</h2>
+          <h2 class="sub-header">Open Requests!</h2>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Number</th>
-                  <th>Time Received</th>
-                  <th>Content</th>
+                  <th>Patient Number</th>
+                  <th>Location</th>
+                  <th>Requiring Assistance</th>
+                  <th>Provide Assitance</th>
+
                 </tr>
               </thead>
+                {% for call in calls %}
+                <tr>
+                  <th>{{call.patient}}</th>
+                  <th>{{call.location}}</th>
+                  <th>{{call.open}}</th>
+                  <th>
+                    <form action="{% url 'open_requests_respond' %}" method="post">
+                      <input hidden type="text" name="patient" value="{{call.patient}}">
+                      <button type="button" onclick="">Respond to Request</button>
+                    </form>
+                  </th>
+                </tr>
+                {% endfor %}
               <tbody>
                 
               </tbody>
