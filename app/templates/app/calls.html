@@ -62,6 +62,7 @@
                   <th>Patient Number</th>
                   <th>Location</th>
                   <th>Requiring Assistance</th>
+                  <th>Provide Assitance</th>
 
                 </tr>
               </thead>
@@ -70,6 +71,12 @@
                   <th>{{call.patient}}</th>
                   <th>{{call.location}}</th>
                   <th>{{call.open}}</th>
+                  <th>
+                    <form action="{% url 'open_requests_respond' %}" method="post">
+                      <input hidden type="text" name="patient" value="{{call.patient}}">
+                      <button type="button" onclick="">Respond to Request</button>
+                    </form>
+                  </th>
                 </tr>
                 {% endfor %}
               <tbody>

@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^signup_submit/', views.signup_submit, name='signup_submit'),
     url(r'^open_requests/', views.open_requests, name='open_requests'),
+    url(r'^open_requests_respond/', views.open_requests_respond, name='open_requests_respond'),
     url(r'^message/newsms/$', views.receive_sms, name='smsResponder')
 ]
 
