@@ -72,9 +72,10 @@
                   <th>{{call.location}}</th>
                   <th>{{call.open}}</th>
                   <th>
-                    <form action="{% url 'login_submit' %}" method="post">
-                      <input hidden type="text" name="patient" value="{{call.patient}}">
-                      <button type="button" onclick="submit">Respond to Request</button>
+                    <form action="{% url 'open_requests_respond' %}" method="post">
+                      <button type="button" onclick="submit" name="patient" value="{{call.patient}}">
+                        Respond to Request
+                      </button>
                     </form>
                   </th>
                 </tr>
