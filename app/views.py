@@ -52,18 +52,26 @@ def get_available_doctors():
     return doctors
 
 
-@require_http_methods(["POST"])
+@require_http_methods(["GET"])
 def signup(request):
-    data = request.POST.get("data")
+    context = {}
+    return render(request, "app/signup.html", context)
 
-    user = User(first_name=data["first_name"], last_name=data["last_name"], email=data["email"],
-                username=data["first_name"]+data["last_name"])
-    user.save()
-    doctor = Doctor(user=user, phone=data["phone"], location=data["location"])
-    doctor.save()
 
-    return HttpResponse(
-            # json.dumps(response_data),
-            content_type="application/json"
-    )
+def signup_submit(request):
+    if request.method == 'POST':
+        print(str(request.POST))
+        data = request.POST
 
+        user = User.objects.create_user(username=data["email"], email=data["email"],
+                                        password=data["password"], first_name=data["first"],
+                                        last_name=data["last"])
+        user.save()
+        doctor = Doctor(user=user, phone=data["phone"], location=data["location"])
+        doctor.save()
+
+        print("it worked !")
+        return HttpResponse("It worked!")
+    else:
+        print("it failed !")
+        return HttpResponse("It failed")

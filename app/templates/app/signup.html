@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -22,34 +23,36 @@
   <body> 
     <div class="container">
 
-      <form class="form-signin">
-        
+      <form action="{% url 'signup_submit' %}" class="form-signin" method="post">
+        {% csrf_token %}
         <h2 class="form-signin-heading"><font size="5">   Get Started with MedMS! </font></h2>
         
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="* Email address/Username" required autofocus>
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="* Email address/Username" required autofocus>
         </br>
+
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="* Create a Password" required>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="* Create a Password" required>
+        </br>
         
         <label for="inputConfirmPassword" class="sr-only">Confirm Password</label>
-        <input type="confirmpassword" id="inputConfirmPassword" class="form-control" placeholder="* Confirm Password" required>
+        <input type="password" name="confirm" id="inputConfirmPassword" class="form-control" placeholder="* Confirm Password" required>
         </br>
         
         <label for="inputFirstName" class="sr-only">First Name</label>
-        <input type="firstname" id="inputFirstName" class="form-control" placeholder="* First Name" required>
+        <input type="firstname" name="first" id="inputFirstName" class="form-control" placeholder="* First Name" required>
         </br>
 
         <label for="inputLastName" class="sr-only">Last Name</label>
-        <input type="lastname" id="inputLastName" class="form-control" placeholder="* Last Name" required>
+        <input type="lastname" name="last" id="inputLastName" class="form-control" placeholder="* Last Name" required>
         </br>
 
         <label for="inputPhoneNumber" class="sr-only">Phone Number</label>
-        <input type="PhoneNumber" id="inputPhoneNumber" class="form-control" placeholder="* Phone Number" required>
+        <input type="PhoneNumber" name="phone" id="inputPhoneNumber" class="form-control" placeholder="* Phone Number" required>
         </br>
 
         <label for="inputLocation" class="sr-only">Location</label>
-        <input type="location" id="inputLocation" class="form-control" placeholder="* Location" required>
+        <input type="location" name="location" id="inputLocation" class="form-control" placeholder="* Location" required>
         </br>
         </br>
         
