@@ -47,7 +47,7 @@ def receive_sms(request):
 def get_available_doctors():
     now = datetime.datetime.now()
     today = now.isoweekday()
-    available_doctors = Availability.object.filter(day=today, start__lte__=now, end__gte__=now)
+    available_doctors = Availability.object.filter(day=today, start__lte=now, end__gte=now)
     doctors = [x.doctor.phone for x in available_doctors]
     return doctors
 
