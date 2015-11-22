@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-from models import Doctor, Availability
+from models import Availability
 from sms_service import SmsService
 
 from django.contrib.auth.models import User
